@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -26,12 +27,23 @@ public class TimelineActivity extends AppCompatActivity {
     private TweetsAdapter adapter;
     private List<Tweet> tweets;
 
+    private SwipeRefreshLayout swipeContainer;
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApp.getRestClient(this);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
 
         //find the recycleView
         rvTweets = findViewById(R.id.rv_tweets);
@@ -41,10 +53,39 @@ public class TimelineActivity extends AppCompatActivity {
         adapter = new TweetsAdapter(this,tweets);
 
         //RecycleView setup: layout manager et setting adapter
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(linearLayoutManager);
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                //loadNextDataFromApi();
+                rvTweets.setAdapter(adapter);
+
+                populateHomeTmeline();
+
+                swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.d("TwitterRefresh", "context s being refreshed");
+                        populateHomeTmeline();
+                    }
+                });
+            }
+        };
         rvTweets.setAdapter(adapter);
 
         populateHomeTmeline();
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d("TwitterRefresh", "context s being refreshed");
+                populateHomeTmeline();
+            }
+        });
     }
 
     private void populateHomeTmeline() {
@@ -52,6 +93,7 @@ public class TimelineActivity extends AppCompatActivity {
           @Override
           public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
              Log.d("TwitterClient success1", response.toString());
+             List<Tweet> tweetsToAdd = new ArrayList<>();
              //parcourir la liste des tweets qui vient de ce Json
               for (int i = 0; i < response.length(); i++){
                   try {
@@ -59,13 +101,19 @@ public class TimelineActivity extends AppCompatActivity {
                       JSONObject jsonTweetObject = response.getJSONObject(i);
                       Tweet tweet = Tweet.fromJson(jsonTweetObject);
                       //add the tweet
-                      tweets.add(tweet);
-                      //notify adapter
-                      adapter.notifyItemInserted(tweets.size() - 1);
+                      tweetsToAdd.add(tweet);
                   } catch (JSONException e) {
                       e.printStackTrace();
                   }
               }
+              //clear exiting data
+              adapter.clear();
+              //show the data we just received
+              adapter.adTweets(tweetsToAdd);
+              // Now we call setRefreshing(false) to signal refresh has finished
+              swipeContainer.setRefreshing(false);
+              scrollListener.resetState();
+
           }
 
           @Override

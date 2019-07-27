@@ -47,4 +47,6 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.0.0'
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //pour actualiser le recycleView
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }
