@@ -43,9 +43,6 @@ public class TimelineActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
-//        getMenuInflater().inflate(R.menu.menu_edit, menu);
-//
-//        MenuItem searchItem = menu.findItem(R.id.action_edit);
 
         client = TwitterApp.getRestClient(this);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);

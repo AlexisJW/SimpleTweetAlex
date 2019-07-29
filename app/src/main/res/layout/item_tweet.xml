@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="90dp"
     android:layout_margin="5dp">
 
     <ImageView
@@ -34,4 +34,15 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:text="This's my tweet!!!" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="672dp"
+        android:text="TextView" />
 </RelativeLayout>
