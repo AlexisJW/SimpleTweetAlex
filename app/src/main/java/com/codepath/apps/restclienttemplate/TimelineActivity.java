@@ -2,8 +2,10 @@ package com.codepath.apps.restclienttemplate;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -30,11 +32,20 @@ public class TimelineActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        //setTitle("a");
+
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+
+//        getMenuInflater().inflate(R.menu.menu_edit, menu);
+//
+//        MenuItem searchItem = menu.findItem(R.id.action_edit);
 
         client = TwitterApp.getRestClient(this);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -87,6 +98,7 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void populateHomeTmeline() {
       client.getHomeTimeline(new JsonHttpResponseHandler(){
