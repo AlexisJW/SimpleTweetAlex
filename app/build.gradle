@@ -49,4 +49,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     //pour actualiser le recycleView
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'com.android.support:design:28.0.0'
+
+    implementation 'com.google.android.material:material:1.0.0-alpha3'
 }

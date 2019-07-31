@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     app:titleTextColor="@android:color/white"
     app:title="TweetAlex"
+    app:layout_scrollFlags="scroll|enterAlways"
     app:navigationIcon="@drawable/ic_launcher_twitter_round">
 
 </androidx.appcompat.widget.Toolbar>

@@ -28,6 +28,7 @@ public class TimelineActivity extends AppCompatActivity {
     private RecyclerView rvTweets;
     private TweetsAdapter adapter;
     private List<Tweet> tweets;
+    Toolbar toolbar;
 
     private SwipeRefreshLayout swipeContainer;
     // Store a member variable for the listener
@@ -40,7 +41,7 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         //setTitle("a");
 
-        Toolbar toolbar = findViewById(R.id.toolbar1);
+         toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
 
@@ -51,7 +52,6 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
 
         //find the recycleView
         rvTweets = findViewById(R.id.rv_tweets);
