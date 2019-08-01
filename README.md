@@ -24,7 +24,7 @@ The following **optional** features are implemented:
 - [ ] User can see embedded image media within the tweet detail view
 - [ ] User sees an **indeterminate progress indicator** when any background or network task is happening
 - [ ] User can **see embedded image media within a tweet** on list or detail view.
-- [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
+- [X] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
 - [ ] User can view following / followers list through any profile they view.
 - [X] User is using **"Twitter branded" colors and styles**
 
