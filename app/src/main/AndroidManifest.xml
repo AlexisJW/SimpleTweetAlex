@@ -14,11 +14,12 @@
         android:icon="@drawable/ic_launcher_twitter_round"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".TimelineActivity"></activity>
-        <!-- <meta-data -->
+        <activity android:name=".DetailTweet"></activity>
+        <activity android:name=".TimelineActivity" /> <!-- <meta-data -->
         <!-- android:name="com.google.com.android.gms.ads.APPLICATION_ID" -->
         <!-- android:value="YOUR_ADMOD_APP_ID" /> -->
-        <activity android:name=".TimelineActivity"
+        <activity
+            android:name=".TimelineActivity"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".LoginActivity"
