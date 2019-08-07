@@ -4,52 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:background="#FFFFFF">
+
+    <include
+        android:id="@+id/toolbar_main"
+        layout="@layout/toolbar1"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:title="@string/compose_hint" />
 
     <ImageView
-        android:id="@+id/tvImageView"
-        android:layout_width="150dp"
+        android:id="@+id/tvImageView1"
+        android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="75dp"
         android:layout_marginRight="5dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_screenName"
+        android:id="@+id/tv_screenName1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="5dp"
-        android:text="Alex" />
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="76dp"
+        android:text="Alex"
+        android:textColor="@android:color/black" />
 
     <TextView
-        android:id="@+id/tv_body"
+        android:id="@+id/tv_body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="36dp"
-        android:text="This's my tweet!!!" />
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="242dp"
+        android:text="This's my tweet!!!"
+        android:textColor="@android:color/black" />
 
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_time1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_screenName1"
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="false"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="672dp"
-        android:text="TextView" />
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="-1dp" />
 
     <TextView
-        android:id="@+id/tv_lien3"
+        android:id="@+id/tv_lien1"
         android:layout_width="67dp"
         android:layout_height="9dp"
         android:layout_alignParentStart="true"

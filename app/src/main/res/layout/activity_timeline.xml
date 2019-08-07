@@ -12,7 +12,7 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        android:theme="@style/AppBaseTheme">
 
         <include
             android:id="@+id/toolbar_main"
@@ -21,10 +21,18 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <!--<include-->
-           <!--android:id="@+id/toolbar_main"-->
-        <!--layout="@layout/toolbar"/>-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnFloat"
+        android:onClick="ActionBtnFloat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/edit"
+        app:backgroundTint="#1E88E5"
+        app:layout_anchor="@id/rv_tweets"
+        app:layout_anchorGravity="bottom|right|end" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
@@ -34,14 +42,19 @@
         android:layout_alignParentStart="true"
         app:layout_dodgeInsetEdges="all">
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tweets"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_below="@+id/toolbar_main"
+            android:layout_marginTop="18dp"
+            android:paddingTop="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

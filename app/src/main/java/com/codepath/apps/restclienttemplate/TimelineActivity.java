@@ -1,9 +1,15 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +22,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +31,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    private final int REQUEST_CODE = 20;
     private TwitterClient client;
     private RecyclerView rvTweets;
     private TweetsAdapter adapter;
     private List<Tweet> tweets;
     Toolbar toolbar;
+    Handler mHandler;
 
     private SwipeRefreshLayout swipeContainer;
     // Store a member variable for the listener
@@ -41,9 +50,14 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         //setTitle("a");
 
-         toolbar = findViewById(R.id.toolbar1);
+         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
+//        getSupportActionBar().setTitle("TweetAlex");
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setLogo(R.drawable.ic_launcher_twitter_round);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        mHandler = new Handler();
 
         client = TwitterApp.getRestClient(this);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -94,8 +108,83 @@ public class TimelineActivity extends AppCompatActivity {
                 populateHomeTmeline();
             }
         });
+
+        //Auto();
+
     }
 
+    public void Auto(){
+        swipeContainer.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    swipeContainer.setRefreshing(true);
+
+                                    populateHomeTmeline();
+                                }
+                            }
+        );
+
+        mHandler = new Handler();
+        startRepeatingTask();
+    }
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            //updateStatus(); //this function can change value of mInterval.
+            mHandler.postDelayed(mStatusChecker, 5000);
+        }
+    };
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
+
+    //added code start here
+    Runnable mAutoRefreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            populateHomeTmeline();
+            mHandler.postDelayed(mAutoRefreshRunnable, 1000);
+        }
+    };
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        //Toast.makeText(this,"llslshjsdfhjhjvhjkjbkjsdhjsdj", Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.compose){
+            Intent intentCompose = new Intent(this, ComposeActivity.class);
+            startActivityForResult(intentCompose, REQUEST_CODE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && requestCode == RESULT_OK){
+             //pull info out of the data Intent
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+            //Update the recycleView
+            tweets.add(0, tweet);
+            adapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);
+//            Auto();
+//            onResume();
+//            startRepeatingTask();
+        }
+    }
 
     private void populateHomeTmeline() {
       client.getHomeTimeline(new JsonHttpResponseHandler(){
@@ -127,14 +216,18 @@ public class TimelineActivity extends AppCompatActivity {
 
           @Override
           public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-              Log.e("TwitterClient err1", errorResponse.toString());
+              Log.e("TwitterClient", "failed");
           }
 
           @Override
           public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-              Log.e("TwitterClient", responseString);
+              Log.e("TwitterClient", "failed1");
           }
       });
     }
 
+    public void ActionBtnFloat(View view) {
+        Intent intentCompose = new Intent(this, ComposeActivity.class);
+        startActivityForResult(intentCompose, REQUEST_CODE);
+    }
 }

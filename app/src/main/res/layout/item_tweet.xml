@@ -7,7 +7,7 @@
     android:layout_margin="5dp">
 
     <ImageView
-        android:id="@+id/tvImageView"
+        android:id="@+id/tvImageView1"
         android:layout_width="50dp"
         android:layout_height="70dp"
         android:layout_alignParentStart="true"
@@ -16,7 +16,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_screenName"
+        android:id="@+id/tv_screenName1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -26,7 +26,7 @@
         android:text="Alex" />
 
     <TextView
-        android:id="@+id/tv_body"
+        android:id="@+id/tv_body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -36,7 +36,7 @@
         android:text="This's my tweet!!!" />
 
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_time1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
@@ -48,12 +48,13 @@
 
     <TextView
         android:id="@+id/tv_lien"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="7dp"
-        android:autoLink="all"
-        android:linksClickable="true"/>
+        android:autoLink="all|none"
+        android:linksClickable="true" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
@@ -21,7 +24,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     private List<Tweet> tweets;
 
     //define the ViewHolder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView tvImageview;
         public TextView tvScreenName;
@@ -29,13 +32,39 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public TextView tvTime;
 
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvImageview = itemView.findViewById(R.id.tvImageView);
-            tvScreenName = itemView.findViewById(R.id.tv_screenName);
-            tvBody = itemView.findViewById(R.id.tv_body);
-            tvTime = itemView.findViewById(R.id.tv_time);
+            tvImageview = itemView.findViewById(R.id.tvImageView1);
+            tvScreenName = itemView.findViewById(R.id.tv_screenName1);
+            tvBody = itemView.findViewById(R.id.tv_body1);
+            tvTime = itemView.findViewById(R.id.tv_time1);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+//
+            if (position != RecyclerView.NO_POSITION){
+                Tweet tweet = tweets.get(position);
+                Intent intent = new Intent(context, DetailTweet.class);
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                context.startActivity(intent);
+            }
+        }
+
+//        @Override
+//        public void onClick(View view){
+//            int position = getAdapterPosition();
+//
+//            if (position != RecyclerView.NO_POSITION){
+//                Tweet tweet = tweets.get(position);
+//                Intent intent = new Intent(context, DetailTweet.class);
+//                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+//                context.startActivity(intent);
+//            }
+//        }
     }
 
     //passer le context et la liste des tweets.
@@ -71,11 +100,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     //lier la valeur en fonction de la position de l'element
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-       Tweet tweet = tweets.get(position);
-       holder.tvBody.setText(tweet.body);
-       holder.tvScreenName.setText(tweet.user.screenName);
-       holder.tvTime.setText(tweet.createdAt);
-       Glide.with(context).load(tweet.user.profileImageUrl).into(holder.tvImageview);
+        Tweet tweet = tweets.get(position);
+        holder.tvBody.setText(tweet.body);
+        holder.tvScreenName.setText(tweet.user.screenName);
+        holder.tvTime.setText(tweet.createdAt);
+        Glide.with(context).load(tweet.user.profileImageUrl).into(holder.tvImageview);
     }
+
 
 }
